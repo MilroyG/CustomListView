@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
     //json string parsing
     private static String JSON_URl = "https://reqres.in/api/users";
 
-    List<Name> Name;
+    List<Name> NameList;
     RecyclerView recyclerView;
 
 
@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Name = new ArrayList<>();
+        NameList = new ArrayList<>();
         recyclerView = findViewById(R.id.recyclerview);
 
         GetData getData = new GetData();
@@ -91,19 +91,19 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             try {
-                JSONObject jsonObject = new JSONObject();
+                JSONObject jsonObject = new JSONObject(s);
                 JSONArray jsonArray = jsonObject.getJSONArray("data");
 
                 for (int i=0; i<jsonArray.length(); i++) {
                     JSONObject jsonObject1 = jsonArray.getJSONObject(i);
-
+        //PARSING DATA FROM JSON_URL
                     Name name = new Name();
                     name.setFname(jsonObject1.getString("first_name"));
                     name.setLname(jsonObject1.getString("last_name"));
                     name.setEmail(jsonObject1.getString("email"));
                     name.setImg(jsonObject1.getString("avatar"));
 
-                    Name.add(name);
+                    NameList.add(name);
 
 
                 }
@@ -111,13 +111,14 @@ public class MainActivity extends AppCompatActivity {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            PutDataIntoRecyclerView(Name);
+            PutDataIntoRecyclerView(NameList);
 
         }
     }
-    private void PutDataIntoRecyclerView(List<Name>Name){
+    //
+    private void PutDataIntoRecyclerView(List<Name>NameList){
 
-        Adapter adapter= new Adapter(this,Name);
+        Adapter adapter= new Adapter(this,NameList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
     }

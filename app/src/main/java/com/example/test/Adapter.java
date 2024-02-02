@@ -46,7 +46,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder>{
         holder.email.setText(mData.get(position).getEmail());
 
 
-        //Glide LIBRARY TO DISPLAY THE IMAGE.
+        //Glide LIBRARY TO LOADIMAGE.
         Glide.with(mContext)
                 .load(mData.get(position).getImg())
                 .into(holder.img);
